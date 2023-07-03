@@ -2,6 +2,7 @@ package src;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class MainMenu {
     static MobileAppManager mobileAppManager = new MobileAppManager();
@@ -21,7 +22,6 @@ public class MainMenu {
         }
         printMenu();
         boolean logIn = true;
-        //assign mobile to user
 
         do {
             System.out.println("Make your choice? ");
@@ -33,8 +33,26 @@ public class MainMenu {
                     case 1 -> {
                         listApps();
                     }
+                    case 2 -> {
+                        listContacts();
+                    }
+                    case 3 -> {
+                        listMobiles();
+                    }
+                    case 4 -> {
+                        listUsers();
+                    }
                     case 5 -> {
                         searchApp();
+                    }
+                    case 6 -> {
+                        searchContact();
+                    }
+                    case 7 -> {
+                        searchMobile();
+                    }
+                    case 8 -> {
+                        searchUser();
                     }
                     case 9 -> {
                         //addApp();
@@ -86,7 +104,9 @@ public class MainMenu {
         System.out.println("22: Restore contacts ");
         System.out.println("23: Filter mobiles by OS ");
         System.out.println("24: Categorize contacts by eMail ");
-        System.out.println("0: Exit\n");
+        System.out.println("25: Update app ");
+        System.out.println("26: Update contact ");
+        System.out.println("0: Log Out\n");
     }
 
     private static void createApps(){
@@ -116,8 +136,14 @@ public class MainMenu {
         Scanner kb = new Scanner(System.in);
         String userName = kb.nextLine();
         //password can be added
-        mobileAppManager.searchUserByName(userName);
+        User userByName = mobileAppManager.searchUserByName(userName);
+        if (userByName == null){
+            System.out.println("User not found. Please try again.");
+            return false;
+        } else
         System.out.println("Your login is successful. Make your choice from menu below !");
+        // Assign a mobile to user
+        // mobileAppManager.assignMobile(mobileAppManager.getMobileBySerialNumber(UUID.randomUUID().toString()), mobileAppManager.searchUserByName(userName));
         return true;
     }
 
@@ -131,16 +157,79 @@ public class MainMenu {
         System.out.println("-------------------------");
     }
 
-    private static void searchApp(){
+    private static void listContacts(){
+        System.out.println("-------------------------");
+        mobileAppManager.listContacts();
+        System.out.println("-------------------------");
+    }
+
+    private static void listMobiles(){
+        System.out.println("-------------------------");
+        mobileAppManager.listMobiles();
+        System.out.println("-------------------------");
+    }
+
+    private static void listUsers(){
+        System.out.println("-------------------------");
+        mobileAppManager.listUsers();
+        System.out.println("-------------------------");
+    }
+
+    private static void searchApp() {
         Scanner kb = new Scanner(System.in);
         System.out.println("-------------------------");
         System.out.println("Enter App name you want to search: ");
         String appName = kb.nextLine();
-        mobileAppManager.searchAppByName(appName);
+        App appByName = mobileAppManager.searchAppByName(appName);
+        if (appByName == null) {
+            System.out.println("App not found. Please try again.");
+        }else {
+            System.out.println("App is found.");
+        }
         System.out.println("-------------------------");
     }
 
+    private static void searchContact() {
+        Scanner kb = new Scanner(System.in);
+        System.out.println("-------------------------");
+        System.out.println("Enter Contact name you want to search: ");
+        String contactName = kb.nextLine();
+        User contactByName = mobileAppManager.searchContactByName(contactName);
+        if (contactByName == null) {
+            System.out.println("Contact not found. Please try again.");
+        }else {
+            System.out.println("Contact is found.");
+        }
+        System.out.println("-------------------------");
+    }
 
+    private static void searchMobile() {
+        Scanner kb = new Scanner(System.in);
+        System.out.println("-------------------------");
+        System.out.println("Enter Mobile serial number you want to search: ");
+        String mobileNumber = kb.nextLine();
+        Mobile mobileByNumber = mobileAppManager.searchMobileByNumber(mobileNumber);
+        if (mobileByNumber == null) {
+            System.out.println("Mobile not found. Please try again.");
+        }else {
+            System.out.println("Mobile is found.");
+        }
+        System.out.println("-------------------------");
+    }
+
+    private static void searchUser() {
+        Scanner kb = new Scanner(System.in);
+        System.out.println("-------------------------");
+        System.out.println("Enter User name you want to search: ");
+        String userName = kb.nextLine();
+        User userByName = mobileAppManager.searchUserByName(userName);
+        if (userByName == null) {
+            System.out.println("User not found. Please try again.");
+        }else {
+            System.out.println("User is found.");
+        }
+        System.out.println("-------------------------");
+    }
 
 
 }

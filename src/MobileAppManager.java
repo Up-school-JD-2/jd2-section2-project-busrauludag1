@@ -9,11 +9,13 @@ public class MobileAppManager {
     private final Map<String, User> userMap;
     private final Map<String, Mobile> mobileMap;
     private final Map<String, App> appMap;
+    private final Map<String, User> contactMap;
 
     public MobileAppManager(){
         userMap = new HashMap<>();
         mobileMap = new HashMap<>();
         appMap = new HashMap<>();
+        contactMap = new HashMap<>();
     }
 
     public MobileAppManager addUser(User user){
@@ -122,21 +124,71 @@ public class MobileAppManager {
         }
     }
 
-    public void searchAppByName(String appName){
-
+    public App searchAppByName(String appName){
+        App searchedApp = null;
+        List<App> apps = new ArrayList<>(appMap.values());
+        for (App app : apps) {
+            if (app.getName().equalsIgnoreCase(appName)) {
+                searchedApp = app;
+            }
+        }
+        return searchedApp;
     }
 
-    public void searchUserByName(String userName){  // DOESN'T WORK
+    public User searchContactByName(String contactName) {
+        User searchedContact = null;
+        List<User> contacts = new ArrayList<User>(contactMap.values());
+        for (User contact : contacts) {
+            if (contact.getName().equalsIgnoreCase(contactName)) {
+                searchedContact = contact;
+            }
+        }
+        return searchedContact;
+    }
+
+    public Mobile searchMobileByNumber(String serialNumber) {
+        Mobile searchedMobile = null;
+        List<Mobile> mobiles = new ArrayList<>(mobileMap.values());
+        for (Mobile mobile : mobiles) {
+            if (mobile.getSerialNumber().equals(serialNumber)) {
+                searchedMobile = mobile;
+            }
+        }
+        return searchedMobile;
+    }
+
+
+    public User searchUserByName(String userName) {
+        User searchedUser = null;
         List<User> users = new ArrayList<User>(userMap.values());
-        users.forEach(user -> {if (user.getName().equalsIgnoreCase(userName)) {
-                                    System.out.println(user);
-                                }
-        });
+        for (User user : users) {
+            if (user.getName().equalsIgnoreCase(userName)) {
+                searchedUser = user;
+            }
+        }
+        return searchedUser;
     }
+
 
     public void listApps(){
-        List<App> apps = new ArrayList<App>(appMap.values());
+        List<App> apps = new ArrayList<>(appMap.values());
         apps.forEach(System.out::println);
     }
 
+    public void listContacts(){
+        List<User> contacts = new ArrayList<>(contactMap.values());
+        if (contacts.isEmpty())
+            System.out.println("There is no contact person in your phone! you can add a contact.");
+        contacts.forEach(System.out::println);
+    }
+
+    public void listMobiles(){
+        List<Mobile> mobiles = new ArrayList<>(mobileMap.values());
+        mobiles.forEach(System.out::println);
+    }
+
+    public void listUsers(){
+        List<User> users = new ArrayList<>(userMap.values());
+        users.forEach(System.out::println);
+    }
 }

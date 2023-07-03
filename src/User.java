@@ -82,7 +82,7 @@ public class User {
                 ", mobileNumber='" + mobileNumber + '\'' +
                 ", eMail='" + eMail + '\'' +
                 ", password='" + password + '\'' +
-                ", mobile serial number='" + mobile.getSerialNumber() +
+                ", mobile serial number='" + mobile +
                 '}';
     }
 }
